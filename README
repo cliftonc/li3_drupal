@@ -1,0 +1,17 @@
+This is a very simple module to integrate the Lithium (http://dev.lithify.me) Framework into Drupal as a module.
+
+There are a few very minor additions:
+
+ * app/config/bootstrap/drupal.php : Drupal environment config.
+ * app/config/Routes.php : Small change to manage Drupal sub-path.
+ * app/libraries/DrupalController.php : Drupal controller to manage security (v basic).
+ * libraries/lithium/security/auth/adapter/Drupal.php : Auth adapter to get access to Drupal logged in user.
+ 
+TODO: 
+
+ * I would like to make it so I can link Lithium rather than include it in the module.
+ * Enable li3 commands to be run from an admin page.
+ * Add Doctrine plugin (this does work - but removed to simplify initial release - want to be able to add as simple plugin).
+ * .... ???
+
+
