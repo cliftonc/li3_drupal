@@ -64,7 +64,7 @@ Connections::add('default', array(
  	'adapter' => 'MySql',
  	'host' => 'localhost',
  	'login' => 'root',
- 	'password' => 'slydog',
+ 	'password' => 'password',
  	'database' => 'lithium'
 ));
 
