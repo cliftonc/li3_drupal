@@ -1,0 +1,78 @@
+<?php
+// $Id: li3_drupal.module,v 0.1 2010/11/29 ccunningham $
+
+/**
+ * @file
+ * li3.module
+ */
+
+  // Include lithium bootstrap and Auth code 
+  require  __DIR__.'/app/config/bootstrap.php';
+
+  use \lithium\security\Auth;
+
+  function li3_drupal_menu() { 
+    
+    $items = array();
+
+    $items['li3_drupal'] = array(
+	    'title' => t('Li3 Apps'),
+	    'page callback' => 'li3_drupal_index',
+	    'access arguments' => array('access li3'),    
+	    'access callback' => TRUE,
+	    'description' => 'Sub-application',
+	    'expanded' => TRUE
+    );    
+        
+    return $items;
+
+  }
+  
+  /**
+   * Clear the li3 session on Drupal logout
+   */
+  
+  function li3_drupal_user_logout($account) {
+
+	// Clear the kohana Auth
+	Auth::clear('default');
+
+  }
+
+  /**
+   * Apps list - non administrative
+   */
+  function li3_drupal_index() {
+  
+	// Lithium routing works based on the url parameter in the GET object
+	// Drupal doesn't appear to require this, so re-wire based on q.
+	$_GET['url'] = $_GET['q'];
+
+	$response = lithium\action\Dispatcher::run(new lithium\action\Request())->body[0];
+
+	// Duplicate of code in the index.php, but return only the body content.	
+	$test = $_GET['q'];
+	$json = 'json';
+	$isjson = substr_compare($test, $json, -strlen($json), strlen($json)) === 0;
+	if($isjson) {
+		print $response;
+		die;
+	} else {
+		return $response;
+	}	
+    
+  }
+    
+  
+/**
+ * Implementation of hook_perm().
+ */
+function li3_drupal_permission() {
+  return array(
+    'access li3' => array(
+      'title' => t('Access Li3'),
+      'description' => t('Access Li3'),
+    )
+  );
+}
+  
