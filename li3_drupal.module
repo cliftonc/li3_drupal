@@ -1,26 +1,47 @@
 <?php
-// $Id: li3_drupal.module,v 0.1 2010/11/29 ccunningham $
+// $Id: li3_drupal.module,v 0.2 2011/03/04 ccunningham $
 
 /**
  * @file
  * li3.module
  */
 
-  // Include lithium bootstrap and Auth code 
-  require  __DIR__.'/app/config/bootstrap.php';
-
+  /**
+  * Lithium
+  * 
+  * Modify the LIBRARY path to point at your instance of lithium
+  * Modify the APP path to point to your application
+  * TODO: Enable multiple applications via configuration or node type? 
+  * The DRUPAL_LITHIUM_PATH is the link that the application will appear as.
+  * 
+  **/  
+  define('LITHIUM_LIBRARY_PATH','/var/www/lithium/libraries');
+  define('LITHIUM_APP_PATH', '/var/www/lithium/app');
+  define('DRUPAL_LITHIUM_PATH', 'li3');
+   
+  /**
+   * Bootstrap via the application.
+   * You need to ensure that the Li3 application is configured to include the li3_drupal plugin.
+   * Auth is included to enable hooking into the Drupal logout.
+   */
+  require  LITHIUM_APP_PATH.'/config/bootstrap.php';
   use \lithium\security\Auth;
 
+  
+  /**
+   * drupal_menu hook.
+   * @return unknown_type
+   */
   function li3_drupal_menu() { 
     
     $items = array();
 
-    $items['li3_drupal'] = array(
+    $items[DRUPAL_LITHIUM_PATH] = array(
 	    'title' => t('Li3 Apps'),
 	    'page callback' => 'li3_drupal_index',
 	    'access arguments' => array('access li3'),    
 	    'access callback' => TRUE,
-	    'description' => 'Sub-application',
+	    'description' => 'Lithium Application',
 	    'expanded' => TRUE
     );    
         
@@ -34,7 +55,7 @@
   
   function li3_drupal_user_logout($account) {
 
-	// Clear the kohana Auth
+	// Clear login data
 	Auth::clear('default');
 
   }
@@ -47,17 +68,17 @@
 	// Lithium routing works based on the url parameter in the GET object
 	// Drupal doesn't appear to require this, so re-wire based on q.
 	$_GET['url'] = $_GET['q'];
-
 	$response = lithium\action\Dispatcher::run(new lithium\action\Request())->body[0];
 
-	// Duplicate of code in the index.php, but return only the body content.	
 	$test = $_GET['q'];
 	$json = 'json';
 	$isjson = substr_compare($test, $json, -strlen($json), strlen($json)) === 0;
 	if($isjson) {
+		// Check if request is action.json 			
 		print $response;
 		die;
 	} else {
+		// Return response in full
 		return $response;
 	}	
     

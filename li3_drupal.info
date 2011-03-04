@@ -1,11 +1,11 @@
-; $Id: ctools.info,v 1.10 2011/01/01 00:01:46 cliftonc Exp $
+; $Id: ctools.info,v 0.2 2011/03/04 cliftonc Exp $
 name = Lithium
 description = Lithium integration
 core = 7.x
 package = Lithium mvc framework
 
 ; Information added by drupal.org packaging script on 2011-01-06
-version = "7.x-1.0-alpha1"
+version = "7.x-0.2-alpha1"
 core = "7.x"
 project = "li3_drupal"
 datestamp = "1294276864"
