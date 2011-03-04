@@ -5,13 +5,13 @@ You simply need to install Lithium:
 	1. Download lithium from http://dev.lithify.me.
 	2. Download li3_drupal plugin - lithium branch, place into the app/libraries folder.
 	
-	*
+	* git clone -b lithium git@github.com:cliftonc/li3_drupal.git
 	
 Then configure Drupal: 
 
 	1. Download and install li3_drupal module (master branch) and install into your Drupal 7 instance. 	
 
-	*
+	* git clone git@github.com:cliftonc/li3_drupal.git
 
 	2. Edit .module to point at your installation of Lithium (change paths as appropriate).
 	3. Enable module.
